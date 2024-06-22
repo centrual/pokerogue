@@ -26,8 +26,6 @@ jobs:
           VITE_BYPASS_LOGIN: ${{ vars.VITE_BYPASS_LOGIN }}
           VITE_BYPASS_TUTORIAL: ${{ vars.VITE_BYPASS_TUTORIAL }}
           VITE_SERVER_URL: ${{ vars.VITE_SERVER_URL }}
-      - name: Copy .env to dist
-        run: cp .env dist/.env
       - name: Push dist directory to centrual/pokerogue
         id: push_directory
         uses: cpina/github-action-push-to-another-repository@main

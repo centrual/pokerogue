@@ -295,7 +295,7 @@ let apiUrl: string;
 if (isLocal) {
   apiUrl = localServerUrl;
 } else {
-  apiUrl = import.meta.env.VITE_API_URL ?? "https://api.pokerogue.net";
+  apiUrl = import.meta.env.VITE_SERVER_URL ?? "https://api.pokerogue.net";
 }
 
 console.log(`VITE_SERVER_URL: ${import.meta.env.VITE_SERVER_URL}`);

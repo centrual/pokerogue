@@ -17,12 +17,15 @@ jobs:
       - name: Put env variables in .env
         run: |
           echo "VITE_BYPASS_LOGIN=${{ vars.VITE_BYPASS_LOGIN }}" > .env
-          echo "VITE_API_URL=${{ vars.VITE_API_URL }}" >> .env
-          echo "VITE_AUTH_URL=${{ vars.VITE_AUTH_URL }}" >> .env
+          echo "VITE_BYPASS_TUTORIAL=${{ vars.VITE_BYPASS_TUTORIAL }}" >> .env
+          echo "VITE_SERVER_URL=${{ vars.VITE_SERVER_URL }}" >> .env
       - name: Build
         run: npm run build
         env:
           NODE_ENV: production
+          VITE_BYPASS_LOGIN: ${{ vars.VITE_BYPASS_LOGIN }}
+          VITE_BYPASS_TUTORIAL: ${{ vars.VITE_BYPASS_TUTORIAL }}
+          VITE_SERVER_URL: ${{ vars.VITE_SERVER_URL }}
       - name: Push dist directory to centrual/pokerogue
         id: push_directory
         uses: cpina/github-action-push-to-another-repository@main

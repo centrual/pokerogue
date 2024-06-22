@@ -289,7 +289,14 @@ export const localServerUrl = import.meta.env.VITE_SERVER_URL ?? `http://${windo
 
 // Set the server URL based on whether it's local or not
 export const serverUrl = isLocal ? localServerUrl : "";
-export const apiUrl = serverUrl && serverUrl !== "" ? serverUrl : "https://api.pokerogue.net";
+
+let apiUrl: string;
+
+if (isLocal) {
+  apiUrl = localServerUrl;
+} else {
+  apiUrl = import.meta.env.VITE_API_URL ?? "https://api.pokerogue.net";
+}
 
 // used to disable api calls when isLocal is true and a server is not found
 export let isLocalServerConnected = true;

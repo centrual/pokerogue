@@ -298,6 +298,9 @@ if (isLocal) {
   apiUrl = import.meta.env.VITE_API_URL ?? "https://api.pokerogue.net";
 }
 
+console.log(`VITE_SERVER_URL: ${import.meta.env.VITE_SERVER_URL}`);
+console.log(`API URL: ${apiUrl}`);
+
 // used to disable api calls when isLocal is true and a server is not found
 export let isLocalServerConnected = true;
 

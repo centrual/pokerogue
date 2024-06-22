@@ -1,5 +1,5 @@
 import i18next from "i18next";
-import { MoneyFormat } from "#enums/money-format";
+import {MoneyFormat} from "#enums/money-format";
 
 export const MissingTextureKey = "__MISSING";
 
@@ -71,10 +71,10 @@ export function padInt(value: integer, length: integer, padWith?: string): strin
 }
 
 /**
-* Returns a random integer between min and min + range
-* @param range The amount of possible numbers
-* @param min The starting number
-*/
+ * Returns a random integer between min and min + range
+ * @param range The amount of possible numbers
+ * @param min The starting number
+ */
 export function randInt(range: integer, min: integer = 0): integer {
   if (range === 1) {
     return min;
@@ -90,10 +90,10 @@ export function randSeedInt(range: integer, min: integer = 0): integer {
 }
 
 /**
-* Returns a random integer between min and max (non-inclusive)
-* @param min The lowest number
-* @param max The highest number
-*/
+ * Returns a random integer between min and max (non-inclusive)
+ * @param min The lowest number
+ * @param max The highest number
+ */
 export function randIntRange(min: integer, max: integer): integer {
   return randInt(max - min, min);
 }
@@ -282,14 +282,15 @@ export const sessionIdKey = "pokerogue_sessionId";
 // Check if the current hostname is 'localhost' or an IP address, and ensure a port is specified
 export const isLocal = (
   (window.location.hostname === "localhost" ||
-   /^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$/.test(window.location.hostname)) &&
+    /^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$/.test(window.location.hostname)) &&
   window.location.port !== "") || window.location.hostname === "";
 
-export const localServerUrl = import.meta.env.VITE_SERVER_URL ?? `http://${window.location.hostname}:${window.location.port+1}`;
+export const localServerUrl = import.meta.env.VITE_SERVER_URL ?? `http://${window.location.hostname}:${window.location.port + 1}`;
 
 // Set the server URL based on whether it's local or not
 export const serverUrl = isLocal ? localServerUrl : "";
-export const apiUrl = isLocal ? serverUrl : "https://api.pokerogue.net";
+export const apiUrl = serverUrl && serverUrl !== "" ? serverUrl : "https://api.pokerogue.net";
+
 // used to disable api calls when isLocal is true and a server is not found
 export let isLocalServerConnected = true;
 
@@ -334,13 +335,14 @@ export function apiFetch(path: string, authed: boolean = false): Promise<Respons
     if (authed) {
       const sId = getCookie(sessionIdKey);
       if (sId) {
-        request["headers"] = { "Authorization": sId };
+        request["headers"] = {"Authorization": sId};
       }
     }
     fetch(`${apiUrl}/${path}`, request)
       .then(response => resolve(response))
       .catch(err => reject(err));
-  }) : new Promise(() => {});
+  }) : new Promise(() => {
+  });
 }
 
 export function apiPost(path: string, data?: any, contentType: string = "application/json", authed: boolean = false): Promise<Response> {
@@ -355,10 +357,11 @@ export function apiPost(path: string, data?: any, contentType: string = "applica
         headers["Authorization"] = sId;
       }
     }
-    fetch(`${apiUrl}/${path}`, { method: "POST", headers: headers, body: data })
+    fetch(`${apiUrl}/${path}`, {method: "POST", headers: headers, body: data})
       .then(response => resolve(response))
       .catch(err => reject(err));
-  }) : new Promise(() => {});
+  }) : new Promise(() => {
+  });
 }
 
 /** Alias for the constructor of a class */
@@ -400,7 +403,7 @@ export function rgbToHsv(r: integer, g: integer, b: integer) {
   const v = Math.max(r, g, b);
   const c = v - Math.min(r, g, b);
   const h = c && ((v === r) ? (g - b) / c : ((v === g) ? 2 + (b - r) / c : 4 + (r - g) / c));
-  return [ 60 * (h < 0 ? h + 6 : h), v && c / v, v];
+  return [60 * (h < 0 ? h + 6 : h), v && c / v, v];
 }
 
 /**
@@ -409,8 +412,8 @@ export function rgbToHsv(r: integer, g: integer, b: integer) {
  * @param {Array} rgb2 Second RGB color in array
  */
 export function deltaRgb(rgb1: integer[], rgb2: integer[]): integer {
-  const [ r1, g1, b1 ] = rgb1;
-  const [ r2, g2, b2 ] = rgb2;
+  const [r1, g1, b1] = rgb1;
+  const [r2, g2, b2] = rgb2;
   const drp2 = Math.pow(r1 - r2, 2);
   const dgp2 = Math.pow(g1 - g2, 2);
   const dbp2 = Math.pow(b1 - b2, 2);
